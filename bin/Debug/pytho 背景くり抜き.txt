@@ -1,0 +1,33 @@
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+ 
+file_path = "../src_data/bird.jpg"
+ 
+img = cv2.imread(file_path)
+img = cv2.Canny(img,100,200)
+ 
+plt.imshow(img, cmap="gray")
+
+
+kernel = np.ones((5,5),np.uint8)
+img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel, iterations= 3)
+
+r=(0.05, 0.80)
+ 
+height, width = img.shape[:2]
+base_area = height * width
+ 
+contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+ 
+mask = np.zeros(img.shape, dtype=np.uint8)
+for cont in contours:
+    cont_area = cv2.contourArea(cont)
+    if cont_area >= base_area * r[0] and cont_area <= base_area * r[1]:
+        cv2.fillConvexPoly(mask, cont, color=255)
+
+img = cv2.imread(file_path)
+img = cv2.cvtColor(img, cv2.COLOR_RGB2RGBA)
+mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2RGBA)
+img[:, :, 3] = np.where(np.all(mask == [0, 0, 0, 255], axis=-1), 0, 255)
+cv2.imwrite('./bird.png', img)
