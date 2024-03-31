@@ -1,0 +1,30 @@
+        private void button1_Click(object sender, EventArgs e) {
+
+            for (int i = 0; i < dataGridView1.RowCount; i++) {
+                if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[0].Value)) {
+                    dataGridView1.Rows.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+//-------------------------------------------------------------------//
+            //CheckBox列を追加する
+            DataGridViewCheckBoxColumn columnCheckBox = new DataGridViewCheckBoxColumn();
+
+            MyCreate.DataGridCheckBox dataGridCheckBox = new DataGridCheckBox();
+
+            dataGridView1.Columns.Add(columnCheckBox);
+
+//--------------------------------------------------------------------//
+
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0) {
+                e.PaintBackground(e.CellBounds, true);
+                ControlPaint.DrawCheckBox(e.Graphics, e.CellBounds.X + 10, e.CellBounds.Y + 10,e.CellBounds.Width - 20, e.CellBounds.Height - 20,(bool)e.FormattedValue ? ButtonState.Checked : ButtonState.Normal);
+                
+                e.Handled = true;
+            }
+        }
+
+//-------------------------------------------------------------------//

@@ -1,0 +1,8 @@
+.csv,UTF-8
+.txt,UTF-8
+.cs,UTF-8
+.html,UTF-8
+.css,UTF-8
+.js,UTF-8
+.java,shift_jis
+.py,UTF-8

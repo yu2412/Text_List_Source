@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Mail_Form
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //JISコード
+            System.Text.Encoding enc = System.Text.Encoding.GetEncoding(50220);
+
+            //MailMessageの作成
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage(
+                "from@xxx.xxx", "to@xxx.xxx");
+            msg.Subject = "題名";
+            msg.SubjectEncoding = enc;
+            //本文と、本文の文字コードを設定する
+            msg.Body = "こんにちは。";
+            msg.BodyEncoding = enc;
+            //「content-transfer-encoding」を「7bit」にする
+            msg.BodyTransferEncoding = System.Net.Mime.TransferEncoding.SevenBit;
+
+            System.Net.Mail.SmtpClient sc = new System.Net.Mail.SmtpClient();
+            //SMTPサーバーなどを設定する
+            sc.Host = "localhost";
+            sc.Port = 25;
+            sc.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            //メッセージを送信する
+            sc.Send(msg);
+
+            //後始末
+            msg.Dispose();
+            sc.Dispose();
+        }
+    }
+}
+
+
+//https://dobon.net/vb/dotnet/internet/smtpmail.html
+// https://dobon.net/vb/dotnet/internet/smtpclient.html
+////SMTPサーバーを指定する
+//System.Web.Mail.SmtpMail.SmtpServer = "（SMTPサーバーを指定する）";
+////送信者が"sender@xxx.xx.com"、送信先が"recipient1@xxx.xx.com"、
+////題名が"TEST"、メッセージが"This is a test mail."
+//System.Web.Mail.SmtpMail.Send(
+//    "sender@xxx.xx.com",
+//    "recipient1@xxx.xx.com",
+//    "TEST",
+//    "This is a test mail.");
