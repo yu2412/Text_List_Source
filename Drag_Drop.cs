@@ -89,7 +89,7 @@ namespace MyCreate {
                             string fn = System.IO.Path.GetFileNameWithoutExtension(DirectoryName);
 
                             string moji = Text_IO.TextRead(DirectoryName, EncodeList[limitList[HitNum]]);
-                            Text_IO.TextFileReWrite(fn + ".txt", moji);
+                            //Text_IO.TextFileReWrite(fn + ".txt", moji);
                             ResultList.Add(fn+".txt",moji);
                         }
                     return true;

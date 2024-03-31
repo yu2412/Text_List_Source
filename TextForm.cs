@@ -513,13 +513,15 @@ namespace Temporarily_Save_Text_List {
                         string key = keyValuePair.Key;
                         string Value = keyValuePair.Value;
 
-                        string NewFileName = FolderPath + key;
+                        string notExtension = System.IO.Path.GetFileNameWithoutExtension(key);
 
-                        while (System.IO.File.Exists(NewFileName + ".txt")) {
+                        string NewFileName = notExtension;
+
+                        while (System.IO.File.Exists(FolderPath + NewFileName + ".txt")) {
                             NewFileName = Microsoft.VisualBasic.Interaction.InputBox("同じファイル名があるので変更してください", "入力画面", NewFileName);
                         }
 
-                        Text_IO.TextFileReWrite(NewFileName + ".txt", Value);
+                        Text_IO.TextFileReWrite(FolderPath + NewFileName + ".txt", Value);
                         List_Reset();
                        // Text_IO.TextFileReWrite(FolderPath + key, Value);
                        // checkedListBox1.Items.Add(key);
@@ -567,13 +569,13 @@ namespace Temporarily_Save_Text_List {
                 } else//OK以外の動作
                 { return; }
 
-                string NewFileName = FolderPath + System.IO.Path.GetFileNameWithoutExtension(FileName);
+                string NewFileName = System.IO.Path.GetFileNameWithoutExtension(FileName);
 
-                while (System.IO.File.Exists( NewFileName+ ".txt")) {
+                while (System.IO.File.Exists( FolderPath + NewFileName+ ".txt")) {
                     NewFileName = Microsoft.VisualBasic.Interaction.InputBox("同じファイル名があるので変更してください","入力画面",NewFileName);
                 }
 
-                Text_IO.TextFileReWrite(NewFileName + ".txt",moji);
+                Text_IO.TextFileReWrite(FolderPath+NewFileName + ".txt",moji);
                 List_Reset();
                 //var obj = System.IO.Path.GetFileNameWithoutExtension(FileName) + ".txt";
                 //checkedListBox1.Items.Add(obj);
